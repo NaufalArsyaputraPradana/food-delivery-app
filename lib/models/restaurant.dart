@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/models/cart_item.dart';
 
 import 'food.dart';
+import 'package:collection/collection.dart';
 
 class Restaurant extends ChangeNotifier {
   final List<Food> _menu = [
@@ -26,6 +28,7 @@ class Restaurant extends ChangeNotifier {
       availableAddons: [
         Addon(name: "Strawberry Sauce", price: 0.99),
         Addon(name: "Blueberry Topping", price: 1.49),
+        Addon(name: "Caramel Sauce", price: 1.99),
       ],
     ),
     Food(
@@ -36,6 +39,7 @@ class Restaurant extends ChangeNotifier {
       category: FoodCategory.desserts,
       availableAddons: [
         Addon(name: "Vanilla Ice Cream", price: 0.99),
+        Addon(name: "Caramel Sauce", price: 1.49),
       ],
     ),
     Food(
@@ -46,6 +50,7 @@ class Restaurant extends ChangeNotifier {
       category: FoodCategory.desserts,
       availableAddons: [
         Addon(name: "Extra Lava Sauce", price: 1.99),
+        Addon(name: "Whipped Cream", price: 1.49),
       ],
     ),
     Food(
@@ -54,7 +59,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/desserts/tiramisu_cake_dessert.png",
       price: 6.99,
       category: FoodCategory.desserts,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Espresso Shot", price: 0.99),
+        Addon(name: "Whipped Cream", price: 1.49),
+      ],
     ),
 
     // Drinks
@@ -64,7 +72,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/drinks/lemonide_drink.png",
       price: 2.99,
       category: FoodCategory.drinks,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Mint Leaves", price: 0.49),
+        Addon(name: "Lemon Slice", price: 0.99),
+      ],
     ),
     Food(
       name: "Iced Tea",
@@ -74,6 +85,7 @@ class Restaurant extends ChangeNotifier {
       category: FoodCategory.drinks,
       availableAddons: [
         Addon(name: "Lemon Slice", price: 0.49),
+        Addon(name: "Ice", price: 0.99),
       ],
     ),
     Food(
@@ -82,7 +94,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/drinks/smoothie_drink.png",
       price: 3.99,
       category: FoodCategory.drinks,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Protein Powder", price: 1.49),
+        Addon(name: "Granola", price: 1.99),
+      ],
     ),
     Food(
       name: "Mojito",
@@ -90,7 +105,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/drinks/mojito_drink.png",
       price: 4.99,
       category: FoodCategory.drinks,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Extra Mint", price: 0.99),
+        Addon(name: "Lime Wedge", price: 1.49),
+      ],
     ),
     Food(
       name: "Caramel Macchiato",
@@ -100,6 +118,7 @@ class Restaurant extends ChangeNotifier {
       category: FoodCategory.drinks,
       availableAddons: [
         Addon(name: "Extra Caramel", price: 0.99),
+        Addon(name: "Whipped Cream", price: 1.49),
       ],
     ),
 
@@ -110,7 +129,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/burgers/aloha_burger.png",
       price: 7.99,
       category: FoodCategory.burgers,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Extra Pineapple", price: 0.99),
+        Addon(name: "Teriyaki Sauce", price: 1.49),
+      ],
     ),
     Food(
       name: "BBQ Burger",
@@ -130,7 +152,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/burgers/cheese_burger.png",
       price: 6.99,
       category: FoodCategory.burgers,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Extra Cheese", price: 0.99),
+        Addon(name: "Bacon", price: 1.49),
+      ],
     ),
     Food(
       name: "Blue Moon Burger",
@@ -138,7 +163,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/burgers/bluemoon_burger.png",
       price: 9.49,
       category: FoodCategory.burgers,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Extra Blue Cheese", price: 1.49),
+        Addon(name: "Caramelized Onions", price: 1.99),
+      ],
     ),
     Food(
       name: "Veggie Burger",
@@ -146,7 +174,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/burgers/vege_burger.png",
       price: 7.49,
       category: FoodCategory.burgers,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Avocado", price: 1.49),
+        Addon(name: "Spicy Sauce", price: 0.99),
+      ],
     ),
 
     // Salads
@@ -156,7 +187,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/salads/asiansesame_salad.png",
       price: 5.99,
       category: FoodCategory.salads,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Grilled Chicken", price: 2.99),
+        Addon(name: "Sesame Seeds", price: 0.49),
+      ],
     ),
     Food(
       name: "Caesar Salad",
@@ -164,7 +198,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/salads/caesar.png",
       price: 5.49,
       category: FoodCategory.salads,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Grilled Chicken", price: 2.99),
+        Addon(name: "Extra Dressing", price: 0.99),
+      ],
     ),
     Food(
       name: "Greek Salad",
@@ -172,7 +209,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/salads/greek_salad.png",
       price: 6.49,
       category: FoodCategory.salads,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Feta Cheese", price: 1.49),
+        Addon(name: "Olives", price: 0.99),
+      ],
     ),
     Food(
       name: "Quinoa Salad",
@@ -180,7 +220,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/salads/quinoa_salad.png",
       price: 7.49,
       category: FoodCategory.salads,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Avocado", price: 1.49),
+        Addon(name: "Extra Vinaigrette", price: 0.99),
+      ],
     ),
     Food(
       name: "Southwest Salad",
@@ -188,7 +231,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/salads/southwest_salad.png",
       price: 6.99,
       category: FoodCategory.salads,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Grilled Chicken", price: 2.99),
+        Addon(name: "Tortilla Strips", price: 0.99),
+      ],
     ),
 
     // Sides
@@ -198,7 +244,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/sides/garlic_bread_side.png",
       price: 3.99,
       category: FoodCategory.sides,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Extra Garlic", price: 0.49),
+        Addon(name: "Cheese Topping", price: 1.49),
+      ],
     ),
     Food(
       name: "Loaded Fries",
@@ -206,7 +255,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/sides/loadedfries_side.png",
       price: 4.99,
       category: FoodCategory.sides,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Extra Cheese", price: 0.99),
+        Addon(name: "Bacon Bits", price: 1.49),
+      ],
     ),
     Food(
       name: "Mac and Cheese",
@@ -214,7 +266,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/sides/mac_side.png",
       price: 4.49,
       category: FoodCategory.sides,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Bacon Crumbles", price: 1.49),
+        Addon(name: "Extra Cheese", price: 0.99),
+      ],
     ),
     Food(
       name: "Onion Rings",
@@ -222,7 +277,10 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/sides/onion_rings_side.png",
       price: 3.49,
       category: FoodCategory.sides,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Spicy Dip", price: 0.99),
+        Addon(name: "BBQ Sauce", price: 0.49),
+      ],
     ),
     Food(
       name: "Sweet Potato Fries",
@@ -230,9 +288,78 @@ class Restaurant extends ChangeNotifier {
       imagePath: "lib/images/sides/sweet_potato_side.png",
       price: 4.49,
       category: FoodCategory.sides,
-      availableAddons: [],
+      availableAddons: [
+        Addon(name: "Cinnamon Sugar", price: 0.49),
+        Addon(name: "Marshmallow Dip", price: 1.49),
+      ],
     ),
   ];
 
+  final List<CartItem> _cart = [];
+
   List<Food> get menu => _menu;
+  List<CartItem> get cart => _cart;
+
+  void addToCart(Food food, List<Addon> selectedAddons) {
+    CartItem? cartItem = _cart.firstWhereOrNull((item) {
+      bool isSameFood = item.food == food;
+      bool isSameAddons = const ListEquality<Addon>()
+          .equals(item.selectedAddons, selectedAddons);
+      return isSameFood && isSameAddons;
+    });
+
+    if (cartItem != null) {
+      cartItem.quantity++;
+    } else {
+      _cart.add(CartItem(
+        food: food,
+        selectedAddons: selectedAddons,
+        quantity: 1,
+      ));
+    }
+
+    notifyListeners();
+  }
+
+  void removeFromCart(CartItem cartItem) {
+    int cartIndex = _cart.indexOf(cartItem);
+
+    if (cartIndex != -1) {
+      if (_cart[cartIndex].quantity > 1) {
+        _cart[cartIndex].quantity--;
+      } else {
+        _cart.removeAt(cartIndex);
+      }
+    }
+    notifyListeners();
+  }
+
+  double getTotalPrice() {
+    double total = 0;
+
+    for (CartItem cartItem in _cart) {
+      double itemTotal = cartItem.food.price;
+
+      for (Addon addon in cartItem.selectedAddons) {
+        itemTotal += addon.price;
+      }
+
+      total += itemTotal * cartItem.quantity;
+    }
+    return total;
+  }
+
+  int getTotalItemCount() {
+    int totalItemCount = 0;
+
+    for (CartItem cartItem in _cart) {
+      totalItemCount += cartItem.quantity;
+    }
+    return totalItemCount;
+  }
+
+  void clearCart() {
+    _cart.clear();
+    notifyListeners();
+  }
 }
