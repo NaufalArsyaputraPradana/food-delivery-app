@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/components/my_button.dart';
 import 'package:food_delivery/components/my_cart_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -18,28 +19,61 @@ class CartPage extends StatelessWidget {
             title: const Text("Cart"),
             backgroundColor: Colors.transparent,
             foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            title: Text(
+                                "Are You Sure You Want to CLear the Cart?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  restaurant.clearCart();
+                                },
+                                child: Text("Yes"),
+                              )
+                            ],
+                          ));
+                },
+                icon: Icon(Icons.delete),
+              )
+            ],
           ),
           body: Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                  itemCount: userCart.length,
-                  itemBuilder: (context, index) {
-                    final cartItem = userCart[index];
+                child: Column(
+                  children: [
+                    userCart.isEmpty
+                        ? Expanded(
+                            child: Center(child: Text("Cart is Empty...")))
+                        : Expanded(
+                            child: ListView.builder(
+                              itemCount: userCart.length,
+                              itemBuilder: (context, index) {
+                                final cartItem = userCart[index];
 
-                    return MyCartTile(cartItem: cartItem);
-                  },
+                                return MyCartTile(cartItem: cartItem);
+                              },
+                            ),
+                          ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Implement checkout logic here
-                  },
-                  child: const Text("Checkout"),
-                ),
+              MyButton(
+                onTap: () {},
+                text: "Go to che,ckout",
               ),
+              SizedBox(
+                height: 25,
+              )
             ],
           ),
         );
