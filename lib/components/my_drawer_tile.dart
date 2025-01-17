@@ -14,21 +14,33 @@ class MyDrawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = TextStyle(
+      color: Theme.of(context).colorScheme.inversePrimary,
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-      child: ListTile(
-        title: Text(
-          text,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.inversePrimary,
-          ),
-        ),
-        leading: Icon(
-          icon,
-          color: Theme.of(context).colorScheme.inversePrimary,
-        ),
-        onTap: onTap,
+      child: _buildListTile(context, text, icon, textStyle, onTap),
+    );
+  }
+
+  Widget _buildListTile(
+    BuildContext context,
+    String text,
+    IconData? icon,
+    TextStyle textStyle,
+    void Function()? onTap,
+  ) {
+    return ListTile(
+      title: Text(
+        text,
+        style: textStyle,
       ),
+      leading: Icon(
+        icon,
+        color: Theme.of(context).colorScheme.inversePrimary,
+      ),
+      onTap: onTap,
     );
   }
 }

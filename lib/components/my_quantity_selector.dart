@@ -17,6 +17,10 @@ class QuantitySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _buildQuantitySelector(context);
+  }
+
+  Widget _buildQuantitySelector(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background,
@@ -26,32 +30,44 @@ class QuantitySelector extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          GestureDetector(
-            onTap: onDecrement,
-            child: Icon(
-              Icons.remove,
-              size: 20,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: SizedBox(
-              width: 20,
-              child: Center(
-                child: Text(quantity.toString()),
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: onIncrement,
-            child: Icon(
-              Icons.add,
-              size: 20,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
+          _buildDecrementButton(context),
+          _buildQuantityText(context),
+          _buildIncrementButton(context),
         ],
+      ),
+    );
+  }
+
+  Widget _buildDecrementButton(BuildContext context) {
+    return GestureDetector(
+      onTap: onDecrement,
+      child: Icon(
+        Icons.remove,
+        size: 20,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+    );
+  }
+
+  Widget _buildQuantityText(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      child: SizedBox(
+        width: 20,
+        child: Center(
+          child: Text(quantity.toString()),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIncrementButton(BuildContext context) {
+    return GestureDetector(
+      onTap: onIncrement,
+      child: Icon(
+        Icons.add,
+        size: 20,
+        color: Theme.of(context).colorScheme.primary,
       ),
     );
   }

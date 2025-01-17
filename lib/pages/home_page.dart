@@ -62,35 +62,55 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    return _buildScaffold(context);
+  }
+
+  Widget _buildScaffold(BuildContext context) {
     return Scaffold(
       drawer: const MyDrawer(),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          MySliverAppBar(
-            title: MyTabBar(tabController: _tabController),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Divider(
-                  indent: 25,
-                  endIndent: 25,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-                const MyCurrentLocation(),
-                const MyDescriptionBox(),
-              ],
-            ),
-          ),
+      body: _buildNestedScrollView(context),
+    );
+  }
+
+  Widget _buildNestedScrollView(BuildContext context) {
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        _buildSliverAppBar(context),
+      ],
+      body: _buildTabBarView(context),
+    );
+  }
+
+  Widget _buildSliverAppBar(BuildContext context) {
+    return MySliverAppBar(
+      title: MyTabBar(tabController: _tabController),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          _buildDivider(context),
+          const MyCurrentLocation(),
+          const MyDescriptionBox(),
         ],
-        body: Consumer<Restaurant>(
-          builder: (context, restaurant, child) {
-            return TabBarView(
-              controller: _tabController,
-              children: getFoodInThisCategory(restaurant.menu),
-            );
-          },
-        ),
       ),
+    );
+  }
+
+  Widget _buildDivider(BuildContext context) {
+    return Divider(
+      indent: 25,
+      endIndent: 25,
+      color: Theme.of(context).colorScheme.secondary,
+    );
+  }
+
+  Widget _buildTabBarView(BuildContext context) {
+    return Consumer<Restaurant>(
+      builder: (context, restaurant, child) {
+        return TabBarView(
+          controller: _tabController,
+          children: getFoodInThisCategory(restaurant.menu),
+        );
+      },
     );
   }
 }

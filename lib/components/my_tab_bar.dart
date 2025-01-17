@@ -6,16 +6,12 @@ class MyTabBar extends StatelessWidget {
 
   const MyTabBar({super.key, required this.tabController});
 
-  List<Tab> _buildCategoryTabs() {
-    return FoodCategory.values.map((category) {
-      return Tab(
-        text: category.toString().split('.').last,
-      );
-    }).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
+    return _buildTabBar(context);
+  }
+
+  Widget _buildTabBar(BuildContext context) {
     return TabBar(
       controller: tabController,
       isScrollable: true,
@@ -23,5 +19,13 @@ class MyTabBar extends StatelessWidget {
       unselectedLabelColor: Colors.grey,
       tabs: _buildCategoryTabs(),
     );
+  }
+
+  List<Tab> _buildCategoryTabs() {
+    return FoodCategory.values.map((category) {
+      return Tab(
+        text: category.toString().split('.').last,
+      );
+    }).toList();
   }
 }

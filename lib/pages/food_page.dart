@@ -36,108 +36,129 @@ class _FoodPageState extends State<FoodPage> {
 
   @override
   Widget build(BuildContext context) {
+    return _buildScaffold(context);
+  }
+
+  Widget _buildScaffold(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return Stack(
+      children: [
+        _buildContent(context),
+        _buildBackButton(context),
+      ],
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(widget.food.imagePath),
-                Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Nama makanan
-                      Text(
-                        widget.food.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      // Harga makanan
-                      Text(
-                        '\$${widget.food.price}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      // Deskripsi makanan
-                      Text(widget.food.description),
-                      const SizedBox(height: 10),
-                      Divider(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      const SizedBox(height: 10),
-                      // Judul add-ons
-                      Text(
-                        "Add-ons",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      // List add-ons dengan Checkbox
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          itemCount: widget.food.availableAddons.length,
-                          itemBuilder: (context, index) {
-                            Addon addon = widget.food.availableAddons[index];
-                            return CheckboxListTile(
-                              title: Text(addon.name),
-                              subtitle: Text('\$${addon.price}'),
-                              value: selectedAddons[addon],
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  selectedAddons[addon] = value ?? false;
-                                });
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // Tombol "Add to Cart"
-                MyButton(
-                  onTap: () => addToCart(widget.food, selectedAddons),
-                  text: "Add to Cart",
-                ),
-                const SizedBox(height: 25),
-              ],
-            ),
-          ),
-          // Tombol kembali dengan latar belakang lingkaran
-          SafeArea(
-            child: Container(
-              margin: const EdgeInsets.only(left: 25),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary.withOpacity(0.6),
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back_ios_rounded),
-              ),
-            ),
-          ),
+          _buildImage(context),
+          _buildFoodInfo(context),
+          _buildAddons(context),
+          _buildAddToCartButton(context),
         ],
+      ),
+    );
+  }
+
+  Widget _buildImage(BuildContext context) {
+    return Image.asset(widget.food.imagePath);
+  }
+
+  Widget _buildFoodInfo(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(25.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildFoodName(context),
+          _buildFoodPrice(context),
+          _buildFoodDescription(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFoodName(BuildContext context) {
+    return Text(
+      widget.food.name,
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+      ),
+    );
+  }
+
+  Widget _buildFoodPrice(BuildContext context) {
+    return Text(
+      '\$${widget.food.price}',
+      style: TextStyle(
+        fontSize: 16,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+    );
+  }
+
+  Widget _buildFoodDescription(BuildContext context) {
+    return Text(widget.food.description);
+  }
+
+  Widget _buildAddons(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
+        itemCount: widget.food.availableAddons.length,
+        itemBuilder: (context, index) {
+          Addon addon = widget.food.availableAddons[index];
+          return CheckboxListTile(
+            title: Text(addon.name),
+            subtitle: Text('\$${addon.price}'),
+            value: selectedAddons[addon],
+            onChanged: (bool? value) {
+              setState(() {
+                selectedAddons[addon] = value ?? false;
+              });
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildAddToCartButton(BuildContext context) {
+    return MyButton(
+      onTap: () => addToCart(widget.food, selectedAddons),
+      text: "Add to Cart",
+    );
+  }
+
+  Widget _buildBackButton(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.only(left: 25),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary.withOpacity(0.6),
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back_ios_rounded),
+        ),
       ),
     );
   }

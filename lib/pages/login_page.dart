@@ -27,66 +27,93 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    return _buildScaffold(context);
+  }
+
+  Widget _buildScaffold(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.lock_open_rounded,
-              size: 100,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-            const SizedBox(height: 25),
-            Text(
-              "Food Delivery App",
-              style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).colorScheme.inversePrimary,
-              ),
-            ),
-            const SizedBox(height: 25),
-            MyTextField(
-              controller: emailController,
-              hintText: "Email",
-              obscureText: false,
-            ),
-            MyTextField(
-              controller: passwordController,
-              hintText: "Password",
-              obscureText: true,
-            ),
-            const SizedBox(height: 25),
-            MyButton(
-              text: "Sign In",
-              onTap: login,
-            ),
-            const SizedBox(height: 25),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Not a Member?",
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary),
-                ),
-                const SizedBox(width: 4),
-                GestureDetector(
-                  onTap: widget.onTap,
-                  child: Text(
-                    "Register Now",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+      body: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildIcon(context),
+          _buildAppName(context),
+          _buildForm(context),
+          _buildButton(context),
+          _buildRegisterLink(context),
+        ],
       ),
+    );
+  }
+
+  Widget _buildIcon(BuildContext context) {
+    return Icon(
+      Icons.lock_open_rounded,
+      size: 100,
+      color: Theme.of(context).colorScheme.inversePrimary,
+    );
+  }
+
+  Widget _buildAppName(BuildContext context) {
+    return Text(
+      "Food Delivery App",
+      style: TextStyle(
+        fontSize: 16,
+        color: Theme.of(context).colorScheme.inversePrimary,
+      ),
+    );
+  }
+
+  Widget _buildForm(BuildContext context) {
+    return Column(
+      children: [
+        MyTextField(
+          controller: emailController,
+          hintText: "Email",
+          obscureText: false,
+        ),
+        MyTextField(
+          controller: passwordController,
+          hintText: "Password",
+          obscureText: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildButton(BuildContext context) {
+    return MyButton(
+      text: "Sign In",
+      onTap: login,
+    );
+  }
+
+  Widget _buildRegisterLink(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Not a Member?",
+          style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+        ),
+        const SizedBox(width: 4),
+        GestureDetector(
+          onTap: widget.onTap,
+          child: Text(
+            "Register Now",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.inversePrimary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
