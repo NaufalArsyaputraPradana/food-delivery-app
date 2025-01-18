@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/models/restaurant.dart';
+import 'package:provider/provider.dart';
 
-class MyCurrentLocation extends StatelessWidget {
+class MyCurrentLocation extends StatefulWidget {
   const MyCurrentLocation({super.key});
+
+  @override
+  State<MyCurrentLocation> createState() => _MyCurrentLocationState();
+}
+
+class _MyCurrentLocationState extends State<MyCurrentLocation> {
+  final TextEditingController _textController = TextEditingController();
 
   void _openLocationSearchBox(BuildContext context) {
     showDialog(
@@ -20,8 +29,9 @@ class MyCurrentLocation extends StatelessWidget {
 
   Widget _buildSearchField() {
     return TextField(
+      controller: _textController,
       decoration: InputDecoration(
-        hintText: "Search Address...",
+        hintText: "Input Address...",
       ),
     );
   }
@@ -29,11 +39,19 @@ class MyCurrentLocation extends StatelessWidget {
   List<Widget> _buildDialogActions(BuildContext context) {
     return [
       MaterialButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          _textController.clear();
+          Navigator.pop(context);
+        },
         child: Text("Cancel"),
       ),
       MaterialButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          String newAddress = _textController.text;
+          context.read<Restaurant>().UpdateDeliveryAddress(newAddress);
+          _textController.clear();
+          Navigator.pop(context);
+        },
         child: Text('Save'),
       ),
     ];
@@ -65,14 +83,17 @@ class MyCurrentLocation extends StatelessWidget {
       onTap: () => _openLocationSearchBox(context),
       child: Row(
         children: [
-          Text(
-            "6901 Hollywood Blv",
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.inversePrimary,
-              fontWeight: FontWeight.bold,
+          Consumer<Restaurant>(
+            builder: (context, restaurant, child) => Text(
+              restaurant.deliveryAddress,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.inversePrimary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          Icon(Icons.keyboard_arrow_down_rounded)
+          Icon(Icons.keyboard_arrow_down_rounded,
+              color: Theme.of(context).colorScheme.inversePrimary),
         ],
       ),
     );

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/pages/login_page.dart';
 
-import '../pages/register_page.dart';
+import '../../pages/register_page.dart';
 
 class LoginOrRegister extends StatefulWidget {
-  final void Function()? onTap;
-
-  LoginOrRegister({super.key, required this.onTap});
+  LoginOrRegister({super.key});
 
   @override
   State<LoginOrRegister> createState() => _LoginOrRegisterState();
